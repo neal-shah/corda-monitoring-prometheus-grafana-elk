@@ -1,0 +1,7 @@
+/.cache
+/mynetwork
+/archive
+*.log
+*.conf
+
+.DS_Store
