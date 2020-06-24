@@ -55,7 +55,9 @@ filebeat.inputs:
 - type: log
   enabled: true
   paths:
-    - "/var/log/node-*"
+    - "/var/log/partya/node-*"
+    - "/var/log/partyb/node-*"
+    - "/var/log/notary/node-*"
 
 output.logstash:
     hosts: ["elk:5044"]
