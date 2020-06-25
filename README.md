@@ -15,6 +15,7 @@
   - [Common issues](#common-issues)
     - [Docker Desktop OOM](#docker-desktop-oom)
     - [Kibana Date Field format error](#kibana-date-field-format-error)
+    - [Kibana max virtual memory is too low](#kibana-max-virtual-memory-is-too-low)
 
 ## Blogpost
 
@@ -451,3 +452,22 @@ If you see the following error:
 >Discover: failed to parse date field [-1830383031864] with format [epoch_millis]: [failed to parse date field [-1830383031864] with format [epoch_millis]]
 
 Click the `Settings` icon, then under Kibana, click `Advanced Settings`.  Under `Time zone for date formatting`, look for your correct time zone (UTC).
+
+### Kibana max virtual memory is too low
+
+If the ELK container exits, this could be due to the max virtual memory limits for Elasticsearch.
+
+You can check this by looking at the log files: `docker logs -f elk` - you may see the following error:
+
+```bash
+elasticsearch_1  | ERROR: bootstrap checks failed
+elasticsearch_1  | max virtual memory areas vm.max_map_count [65530] is too low, increase to at least [262144]
+```
+
+On your machine, run the following:
+
+```bash
+sudo sysctl -w vm.max_map_count=262144
+```
+
+Then restart your ELK container: `docker restart elk`
