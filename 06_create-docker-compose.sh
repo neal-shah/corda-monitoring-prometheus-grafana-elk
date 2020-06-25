@@ -19,7 +19,7 @@ services:
       - ./notary/node.conf:/etc/corda/node.conf:ro
       - ./notary/certificates:/opt/corda/certificates:ro
       - ./notary/persistence.mv.db:/opt/corda/persistence/persistence.mv.db:rw
-      - ./notary/persistence.trace.db:opt/corda/persistence/persistence.trace.db:rw
+      - ./notary/persistence.trace.db:/opt/corda/persistence/persistence.trace.db:rw
       - ./notary/logs:/opt/corda/logs:rw
       - ./shared/additional-node-infos:/opt/corda/additional-node-infos:rw
       - ./shared/drivers:/opt/corda/drivers:ro
@@ -38,10 +38,10 @@ services:
       - ./partya/node.conf:/etc/corda/node.conf:ro
       - ./partya/certificates:/opt/corda/certificates:ro
       - ./partya/persistence.mv.db:/opt/corda/persistence/persistence.mv.db:rw
-      - ./partya/persistence.trace.db:opt/corda/persistence/persistence.trace.db:rw
+      - ./partya/persistence.trace.db:/opt/corda/persistence/persistence.trace.db:rw
       - ./partya/logs:/opt/corda/logs:rw
       - ./shared/additional-node-infos:/opt/corda/additional-node-infos:rw
-      - ./shared/cordapps:/opt/corda/cordapps:ro
+      - ./shared/cordapps:/opt/corda/cordapps:rw
       - ./shared/drivers:/opt/corda/drivers:ro
       - ./shared/network-parameters:/opt/corda/network-parameters:rw
     environment:
@@ -58,15 +58,15 @@ services:
       - ./partyb/node.conf:/etc/corda/node.conf:ro
       - ./partyb/certificates:/opt/corda/certificates:ro
       - ./partyb/persistence.mv.db:/opt/corda/persistence/persistence.mv.db:rw
-      - ./partyb/persistence.trace.db:opt/corda/persistence/persistence.trace.db:rw
+      - ./partyb/persistence.trace.db:/opt/corda/persistence/persistence.trace.db:rw
       - ./partyb/logs:/opt/corda/logs:rw
       - ./shared/additional-node-infos:/opt/corda/additional-node-infos:rw
-      - ./shared/cordapps:/opt/corda/cordapps:ro
+      - ./shared/cordapps:/opt/corda/cordapps:rw
       - ./shared/drivers:/opt/corda/drivers:ro
       - ./shared/network-parameters:/opt/corda/network-parameters:rw
     environment:
       - "JVM_ARGS=-javaagent:/opt/corda/drivers/jmx_prometheus_javaagent-0.13.0.jar=8080:/opt/corda/drivers/config.yml"
-      
+
   prometheus:
     image: prom/prometheus:latest
     container_name: prometheus
@@ -115,8 +115,8 @@ services:
     depends_on:
       - elk
   
-  volumes:
-    grafana-storage:
+volumes:
+  grafana-storage:
 EOF
 
 printf "Created in: ./mynetwork/docker-compose.yml\n"
