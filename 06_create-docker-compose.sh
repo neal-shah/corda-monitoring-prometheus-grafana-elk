@@ -16,13 +16,14 @@ services:
     ports:
       - "10002:10201"
     volumes:
-      - ./notary/node.conf:/etc/corda/node.conf
-      - ./notary/certificates:/opt/corda/certificates
-      - ./notary/persistence:/opt/corda/persistence
-      - ./notary/logs:/opt/corda/logs
-      - ./shared/additional-node-infos:/opt/corda/additional-node-infos
-      - ./shared/drivers:/opt/corda/drivers
-      - ./shared/network-parameters:/opt/corda/network-parameters
+      - ./notary/node.conf:/etc/corda/node.conf:ro
+      - ./notary/certificates:/opt/corda/certificates:ro
+      - ./notary/persistence.mv.db:/opt/corda/persistence/persistence.mv.db:rw
+      - ./notary/persistence.trace.db:opt/corda/persistence/persistence.trace.db:rw
+      - ./notary/logs:/opt/corda/logs:rw
+      - ./shared/additional-node-infos:/opt/corda/additional-node-infos:rw
+      - ./shared/drivers:/opt/corda/drivers:ro
+      - ./shared/network-parameters:/opt/corda/network-parameters:rw
     environment:
       - "JVM_ARGS=-javaagent:/opt/corda/drivers/jmx_prometheus_javaagent-0.13.0.jar=8080:/opt/corda/drivers/config.yml"
 
@@ -34,14 +35,15 @@ services:
       - "10005:10201"
       - "2222:2222"
     volumes:
-      - ./partya/node.conf:/etc/corda/node.conf
-      - ./partya/certificates:/opt/corda/certificates
-      - ./partya/persistence:/opt/corda/persistence
-      - ./partya/logs:/opt/corda/logs
-      - ./shared/additional-node-infos:/opt/corda/additional-node-infos
-      - ./shared/cordapps:/opt/corda/cordapps
-      - ./shared/drivers:/opt/corda/drivers
-      - ./shared/network-parameters:/opt/corda/network-parameters
+      - ./partya/node.conf:/etc/corda/node.conf:ro
+      - ./partya/certificates:/opt/corda/certificates:ro
+      - ./partya/persistence.mv.db:/opt/corda/persistence/persistence.mv.db:rw
+      - ./partya/persistence.trace.db:opt/corda/persistence/persistence.trace.db:rw
+      - ./partya/logs:/opt/corda/logs:rw
+      - ./shared/additional-node-infos:/opt/corda/additional-node-infos:rw
+      - ./shared/cordapps:/opt/corda/cordapps:ro
+      - ./shared/drivers:/opt/corda/drivers:ro
+      - ./shared/network-parameters:/opt/corda/network-parameters:rw
     environment:
       - "JVM_ARGS=-javaagent:/opt/corda/drivers/jmx_prometheus_javaagent-0.13.0.jar=8080:/opt/corda/drivers/config.yml"
 
@@ -53,16 +55,18 @@ services:
       - "10008:10201"
       - "3333:2222"
     volumes:
-      - ./partyb/node.conf:/etc/corda/node.conf
-      - ./partyb/certificates:/opt/corda/certificates
-      - ./partyb/persistence:/opt/corda/persistence
-      - ./partyb/logs:/opt/corda/logs
-      - ./shared/additional-node-infos:/opt/corda/additional-node-infos
-      - ./shared/cordapps:/opt/corda/cordapps
-      - ./shared/drivers:/opt/corda/drivers
-      - ./shared/network-parameters:/opt/corda/network-parameters
+      - ./partyb/node.conf:/etc/corda/node.conf:ro
+      - ./partyb/certificates:/opt/corda/certificates:ro
+      - ./partyb/persistence.mv.db:/opt/corda/persistence/persistence.mv.db:rw
+      - ./partyb/persistence.trace.db:opt/corda/persistence/persistence.trace.db:rw
+      - ./partyb/logs:/opt/corda/logs:rw
+      - ./shared/additional-node-infos:/opt/corda/additional-node-infos:rw
+      - ./shared/cordapps:/opt/corda/cordapps:ro
+      - ./shared/drivers:/opt/corda/drivers:ro
+      - ./shared/network-parameters:/opt/corda/network-parameters:rw
     environment:
       - "JVM_ARGS=-javaagent:/opt/corda/drivers/jmx_prometheus_javaagent-0.13.0.jar=8080:/opt/corda/drivers/config.yml"
+      
   prometheus:
     image: prom/prometheus:latest
     container_name: prometheus
@@ -80,7 +84,7 @@ services:
     ports:
       - 3000:3000
     volumes:
-      - ./grafana/data:/var/lib/grafana
+      - grafana-storage:/var/lib/grafana
     environment:
       - "GF_INSTALL_PLUGINS=grafana-clock-panel"
 
@@ -101,15 +105,18 @@ services:
     image: docker.elastic.co/beats/filebeat:7.7.1
     volumes:
       - ./filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
-      - ./partya/logs:/var/log/partya
-      - ./partyb/logs:/var/log/partyb
-      - ./notary/logs:/var/log/notary
+      - ./partya/logs:/var/log/partya:ro
+      - ./partyb/logs:/var/log/partyb:ro
+      - ./notary/logs:/var/log/notary:ro
       - /var/lib/docker/containers:/var/lib/docker/containers:ro
     environment:  
       - "setup.kibana.host=elk:5601"
       - "output.elasticsearch.hosts=[\"elk:9200\"]"
     depends_on:
       - elk
+  
+  volumes:
+    grafana-storage:
 EOF
 
 printf "Created in: ./mynetwork/docker-compose.yml\n"

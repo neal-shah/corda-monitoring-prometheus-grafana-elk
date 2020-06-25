@@ -8,7 +8,7 @@ printf "************************************************************************
 mkdir mynetwork
 mkdir {mynetwork/shared,mynetwork/shared/additional-node-infos,mynetwork/shared/drivers,mynetwork/shared/cordapps,mynetwork/shared/db}
 mkdir mynetwork/prometheus
-mkdir {mynetwork/grafana,mynetwork/grafana/data}
+mkdir mynetwork/grafana
 mkdir mynetwork/filebeat
 mkdir mynetwork/logstash
 
