@@ -5,6 +5,7 @@ printf "************************************************************************
 printf "Create Notary configuration\n"
 printf "*********************************************************************************\n"
 
+install -m 644 /dev/null ./mynetwork/notary_node.conf
 cat <<EOF >./mynetwork/notary_node.conf
 devMode=true
 emailAddress="test@test.com"
@@ -26,6 +27,7 @@ printf "************************************************************************
 printf "Create PartyA configuration\n"
 printf "*********************************************************************************\n\n"
 
+install -m 644 /dev/null ./mynetwork/partya_node.conf
 cat <<EOF >./mynetwork/partya_node.conf
 devMode=true
 emailAddress="test@test.com"
@@ -64,6 +66,7 @@ printf "************************************************************************
 printf "Create PartyB configuration\n"
 printf "*********************************************************************************\n\n"
 
+install -m 644 /dev/null ./mynetwork/partyb_node.conf
 cat <<EOF >./mynetwork/partyb_node.conf
 devMode=true
 emailAddress="test@test.com"

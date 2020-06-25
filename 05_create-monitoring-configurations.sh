@@ -5,6 +5,7 @@ printf "************************************************************************
 printf "Create the Prometheus driver config\n"
 printf "*********************************************************************************\n"
 
+install -m 644 /dev/null ./mynetwork/shared/drivers/config.yml
 cat <<EOF >./mynetwork/shared/drivers/config.yml
 {}
 EOF
@@ -16,6 +17,7 @@ printf "************************************************************************
 printf "Create the Prometheus configuration\n"
 printf "*********************************************************************************\n\n"
 
+install -m 644 /dev/null ./mynetwork/prometheus/prometheus.yml
 cat <<EOF >./mynetwork/prometheus/prometheus.yml
 global:
   scrape_interval: 10s
@@ -45,6 +47,7 @@ printf "************************************************************************
 printf "Create the Filebeat configuration\n"
 printf "*********************************************************************************\n\n"
 
+install -m 644 /dev/null ./mynetwork/filebeat/filebeat.yml
 cat <<EOF >./mynetwork/filebeat/filebeat.yml
 filebeat.config:
   modules:
@@ -70,6 +73,7 @@ printf "************************************************************************
 printf "Create the Logstash configuration\n"
 printf "*********************************************************************************\n\n"
 
+install -m 644 /dev/null ./mynetwork/logstash/02-beats-input.conf
 cat <<EOF >./mynetwork/logstash/02-beats-input.conf
 input {
   beats {
