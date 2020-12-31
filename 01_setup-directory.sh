@@ -22,8 +22,8 @@ wget -N --https-only --progress=bar -N --continue -P ./mynetwork https://softwar
 printf "*********************************************************************************\n"
 printf "Download Corda Finance CordApp\n"
 printf "*********************************************************************************\n\n"
-wget -N --https-only --progress=bar -N --continue -P ./mynetwork https://software.r3.com/artifactory/corda-releases/net/corda/corda-finance-contracts/4.4/corda-finance-contracts-4.4.jar
-wget -N --https-only --progress=bar -N --continue -P ./mynetwork https://software.r3.com/artifactory/corda-releases/net/corda/corda-finance-workflows/4.4/corda-finance-workflows-4.4.jar
+wget -N --https-only --progress=bar -N --continue -P ./mynetwork/shared/cordapps https://software.r3.com/artifactory/corda-releases/net/corda/corda-finance-contracts/4.4/corda-finance-contracts-4.4.jar
+wget -N --https-only --progress=bar -N --continue -P ./mynetwork/shared/cordapps https://software.r3.com/artifactory/corda-releases/net/corda/corda-finance-workflows/4.4/corda-finance-workflows-4.4.jar
 
 # Download Prometheus driver
 printf "*********************************************************************************\n"
