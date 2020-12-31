@@ -7,9 +7,7 @@ printf "************************************************************************
 
 cp -R mynetwork/partya/additional-node-infos/* mynetwork/shared/additional-node-infos/
 printf "Copied node-infos\n"
-cp -R mynetwork/partya/cordapps/* mynetwork/shared/cordapps/
-printf "Copied cordapps\n"
-cp mynetwork/partya/network-parameters mynetwork/shared/
+cp mynetwork/partya/network-parameters mynetwork/shared/network-parameters
 printf "Copied network-parameters\n"
 
 printf "*********************************************************************************\n"
